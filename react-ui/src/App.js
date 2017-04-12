@@ -4,9 +4,9 @@ import './App.css';
 
 const socket = require('socket.io-client')()
 
-socket.on('usersConnected', (count) => {
-  console.log('Connected Users: ' + count);
-});
+
+///to join a group, take group id and send socket message on after mounting.
+//router ignores id but uses it to send a websocket message back. 
 
 class App extends Component {
   constructor(props) {
@@ -18,6 +18,12 @@ class App extends Component {
   }
 
   componentDidMount() {
+    socket.on('usersConnected', (count) => {
+      console.log('Connected Users: ' + count);
+      socket.send('Join Group', 'abc123')
+    });
+
+
     fetch('/api')
       .then(response => {
         if (!response.ok) {
