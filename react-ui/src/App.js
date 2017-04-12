@@ -2,6 +2,12 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+const socket = require('socket.io-client')()
+
+socket.on('usersConnected', (count) => {
+  console.log('Connected Users: ' + count);
+});
+
 class App extends Component {
   constructor(props) {
     super(props);
