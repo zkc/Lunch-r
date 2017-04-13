@@ -5,7 +5,7 @@ export default class VotePage extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      group_options: {1: 'a', 2: 'b', 3: 'c'},
+      group: {},
       loading: true,
       group_found: false,
     }
@@ -32,7 +32,7 @@ export default class VotePage extends Component {
     socket.send('FIND_GROUP', group_id)
       .on('FIND_GROUP_REPLY', (res) => {
         if(res.ok) {
-          this.setState({loading: false, group_found: true})
+          this.setState({loading: false, group_found: true, group: res.body})
         } else {
           this.setState({loading: false, group_found: false})
         }
