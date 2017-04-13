@@ -37,6 +37,10 @@ const server = http.createServer(app)
 
 const io = socketIo(server);
 
+const updateLib = (group_id, newData) => {
+  groupLib[group_id] = newData
+}
+
 const groupLib = {
   //group_id: { ...group_data, group_id }
   '1234': {
@@ -54,8 +58,9 @@ let groupIdGen = 0
 const makeNewGroup = () => {
   groupIdGen++
   const newGroupID = groupIdGen
-  groupLib[newGroupID] = { group_id: newGroupID }
-  return newGroupID
+  const newGroup = { group_id: newGroupID }
+  groupLib[newGroupID] = newGroup
+  return newGroup
 }
 
 
@@ -70,16 +75,21 @@ io.on('connection', (socket) => {
   })
 
   socket.on('message', (group_id, message) => {
-    const messageHandler = new messageHandlerConstructor(socket)
+    const messageHandler = new messageHandlerConstructor(socket, updateLib.bind(this))
     if (group_id === 'new') {
       console.log('new group ', message)
-      const newGroupID = makeNewGroup()
-      socket.emit('GROUP_ID_ARRIVE', { ok: true, body: { group_id: newGroupID } })
+      const newGroup = makeNewGroup()
+      socket.emit('GROUP_ID_ARRIVE', { ok: true, body: newGroup })
     }
-    //switch channel and message. channel is group_id, message object has all info.
+
+    // if (message.type === 'UPDATE_GROUP') {
+    //
+    // }
+    // switch channel and message. channel is group_id, message object has all info.
     // Get group info from storeage
     const groupInfo = groupLib[group_id]
     if (groupInfo) {
+      // need to handle updating group info
       messageHandler.setGroup(groupInfo)
       messageHandler.handle({ message })
     } else {

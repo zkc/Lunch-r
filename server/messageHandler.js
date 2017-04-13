@@ -1,7 +1,8 @@
 class messageHandler {
-  constructor(socket) {
+  constructor(socket, updateLib) {
     this.socket = socket
     this.groupInfo = {}
+    this.update = updateLib
   }
 
   handle({ message }) {
@@ -12,18 +13,23 @@ class messageHandler {
         socket.emit('FIND_GROUP_REPLY', { ok: true, body: groupInfo });
         break;
       case 'SEND_GROUP_INFO':
-        console.log(message);
-        this.groupInfo = message.body;
+        console.log('groupinfo', message);
+        this.update(groupInfo.group_id, message.body)
+        // this.groupInfo = message.body;
+
         break
+      // case 'UPDATE_GROUP':
+      //   this.groupInfo
       default:
         console.log('Unknown message type ', message.type)
     }
   }
 
   setGroup(groupInfo) {
-    if (!this.groupInfo.group_id) {
+    console.log(groupInfo)
+    // if (!this.groupInfo.group_id) {
       this.groupInfo = groupInfo
-    }
+    // }
   }
 }
 
