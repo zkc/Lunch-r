@@ -36,7 +36,7 @@ class App extends Component {
           <h2>Welcome to Lunch-r</h2>
         </div>
         <div className="App-intro">
-          <Route path={'/join/:group_id'} render={({ match }) => <VotePage group_id={ match.params.group_id } />} />
+          <Route path={'/join/:group_id'} render={({ match }) => <VotePage socket={socket} group_id={ match.params.group_id } />} />
         </div>
       </div>
     );

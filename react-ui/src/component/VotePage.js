@@ -13,8 +13,6 @@ export default class VotePage extends Component {
 
   render() {
     const { loading, group_found } = this.state
-
-
     return (
       <div>
         <h3>Cast your vote</h3>
@@ -27,5 +25,17 @@ export default class VotePage extends Component {
         </p>
       </div>
     )
+  }
+
+  componentDidMount() {
+    const { socket, group_id } = this.props
+    socket.send('FIND_GROUP', group_id)
+      .on('FIND_GROUP_REPLY', (res) => {
+        if(res.ok) {
+          this.setState({loading: false, group_found: true})
+        } else {
+          this.setState({loading: false, group_found: false})
+        }
+      })
   }
 }
