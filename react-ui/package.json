@@ -8,8 +8,7 @@
   "dependencies": {
     "react": "^15.5.3",
     "react-dom": "^15.5.3",
-    "react-router": "^4.1.0",
-    "react-router-dom": "^4.1.0",
+    "react-router-dom": "^4.1.1",
     "socket.io-client": "^1.7.3"
   },
   "scripts": {
