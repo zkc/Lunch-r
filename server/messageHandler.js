@@ -5,11 +5,16 @@ class messageHandler {
   }
 
   handle({ message }) {
-    console.log(message)
+    const { socket, groupInfo } = this
+    // console.log(message)
     switch (message.type) {
       case 'FIND_GROUP':
-        this.socket.emit('FIND_GROUP_REPLY', { ok: true, body: this.groupInfo });
+        socket.emit('FIND_GROUP_REPLY', { ok: true, body: groupInfo });
         break;
+      case 'SEND_GROUP_INFO':
+        console.log(message);
+        this.groupInfo = message.body;
+        break
       default:
         console.log('Unknown message type ', message.type)
     }

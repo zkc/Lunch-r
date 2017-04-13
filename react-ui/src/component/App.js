@@ -37,9 +37,8 @@ class App extends Component {
         </div>
         <div className="App-intro">
           <Route path={'/join/:group_id'} render={({ match }) => <VotePage socket={socket} group_id={ match.params.group_id } />} />
-          <Route exact path={'/new/:group_id'} render={({ match }) => <NewGroup socket={socket} group_id={ match.params.group_id } />} />
           <Route exact path={'/new'} render={({ match }) => <NewGroup socket={socket} group_id={ match.params.group_id } />} />
-
+          <Route path={'/new/:group_id'} render={({ match }) => <NewGroup socket={socket} group_id={ match.params.group_id } />} />
         </div>
       </div>
     );
@@ -47,3 +46,4 @@ class App extends Component {
 }
 
 export default App;
+
