@@ -1,9 +1,9 @@
 import React from 'react';
 
-const NotFound = (props) => {
+const NotFound = ({ bad_id }) => {
   return (
     <div>
-      Group not found
+      {`Group: ${bad_id} not found.`}
     </div>
   )
 }

@@ -34,8 +34,21 @@ const server = http.createServer(app)
 
 const io = socketIo(server);
 
+const groupLib = {
+  //group_id: { ...group_data, group_id }
+  '1234': {
+    group_id: '1234',
+    leader:'Testeroni',
+    top_options: {
+      1: 'Pizza Pizza',
+      2: 'French Fry Bonanza',
+      3: 'Fishy Fish'
+    }
+  }
+}
+
 io.on('connection', (socket) => {
-  console.log('A user has connected.', io.engine.clientsCount);
+  console.log('A user has connected.', io.engine.clientsCount, Date.now());
   io.sockets.emit('usersConnected', io.engine.clientsCount);
 
 
@@ -45,7 +58,22 @@ io.on('connection', (socket) => {
   })
 
   socket.on('message', (channel, message) => {
-    console.log(channel, message)
+    // console.log(channel, message)
+    switch (channel) {
+      case 'FIND_GROUP':
+        //check for group in storage
+        console.log('Finding group ', message)
+        if (groupLib[message]) {
+          socket.emit('FIND_GROUP_REPLY', {ok: true, body: groupLib[message]});
+        } else {
+          socket.emit('FIND_GROUP_REPLY', {ok: false, body: {}});
+        }
+
+        break;
+      default:
+        console.log('No case for channel')
+
+    }
     //create new group: create local session with unique key. key also used for url
   })
 });
