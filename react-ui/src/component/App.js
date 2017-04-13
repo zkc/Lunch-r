@@ -36,25 +36,7 @@ class App extends Component {
           <h2>Welcome to Lunch-r</h2>
         </div>
         <div className="App-intro">
-          <Route path={'/join/:group_id'} render={({ match }) => {
-            let okFlag = false
-            socket.send('FIND_GROUP', match.params.group_id)
-              .on('FIND_GROUP_REPLY', (res) => {
-                console.log('response', res)
-                if (res.ok) {
-                  console.log('return VotePage')
-                  okFlag = true
-                } else {
-
-                }
-              })
-              if (okFlag) {
-                return <VotePage />
-              }
-              return <NotFound bad_id={match.params.group_id} />
-            //socket call check for group info. if info, then return vote component with group data in props
-            //else, return group not found
-          }} />
+          <Route path={'/join/:group_id'} render={({ match }) => <VotePage group_id={ match.params.group_id } />} />
         </div>
       </div>
     );
