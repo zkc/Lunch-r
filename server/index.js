@@ -46,24 +46,21 @@ const makeNewGroup = () => {
   return newGroup
 }
 
-
+//This is stuff intended for outgoing socket messages, use messageHandler for incoming messages
 io.on('connection', (socket) => {
+  console.log('A user has connected.', io.engine.clientsCount, Date.now());
+  io.sockets.emit('usersConnected', io.engine.clientsCount);
+  // ------------------
+
   const updateLib = (group_id, newData) => {
     groupLib[group_id] = newData
     socket.emit('VoteUpdate', { newData })
   }
-  const messageHandler = new messageHandlerConstructor(socket, updateLib.bind(this))
-  // HOW CAN I lock in the group id on socket connection
-  // three states: no_group, group_not_found, group_connected
-  console.log('A user has connected.', io.engine.clientsCount, Date.now());
-  io.sockets.emit('usersConnected', io.engine.clientsCount);
 
-  socket.on('disconnect', () => {
-    console.log('A user has disconnected.', io.engine.clientsCount);
-    io.sockets.emit('usersConnected', io.engine.clientsCount);
-  })
+  const messageHandler = new messageHandlerConstructor(socket, updateLib.bind(this), io)
 
   socket.on('message', (group_id, message) => {
+
     if (group_id === 'new') {
       const newGroup = makeNewGroup()
       console.log('here is new group', newGroup)
@@ -78,6 +75,14 @@ io.on('connection', (socket) => {
     } else {
       socket.emit('FIND_GROUP_REPLY', {ok: false, body: {}});
     }
-
   })
+
+  // HOW CAN I lock in the group id on socket connection
+  // three states: no_group, group_not_found, group_connected
+
+  // socket.on('disconnect', () => {
+  //   console.log('A user has disconnected.', io.engine.clientsCount);
+  //   io.sockets.emit('usersConnected', io.engine.clientsCount);
+  // })
+
 });
