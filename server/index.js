@@ -23,9 +23,6 @@ const server = http.createServer(app)
 
 const io = socketIo(server);
 
-const updateLib = (group_id, newData) => {
-  groupLib[group_id] = newData
-}
 
 const groupLib = {
   //group_id: { ...group_data, group_id }
@@ -51,6 +48,13 @@ const makeNewGroup = () => {
 
 
 io.on('connection', (socket) => {
+  const updateLib = (group_id, newData) => {
+    groupLib[group_id] = newData
+    socket.emit('VoteUpdate', { newData })
+  }
+  const messageHandler = new messageHandlerConstructor(socket, updateLib.bind(this))
+  // HOW CAN I lock in the group id on socket connection
+  // three states: no_group, group_not_found, group_connected
   console.log('A user has connected.', io.engine.clientsCount, Date.now());
   io.sockets.emit('usersConnected', io.engine.clientsCount);
 
@@ -60,16 +64,16 @@ io.on('connection', (socket) => {
   })
 
   socket.on('message', (group_id, message) => {
-    const messageHandler = new messageHandlerConstructor(socket, updateLib.bind(this))
     if (group_id === 'new') {
       const newGroup = makeNewGroup()
+      console.log('here is new group', newGroup)
       socket.emit('GROUP_ID_ARRIVE', { ok: true, body: newGroup })
     }
 
     const groupInfo = groupLib[group_id]
     if (groupInfo) {
-      // need to handle updating group info
       messageHandler.setGroup(groupInfo)
+      // need to handle updating group info
       messageHandler.handle({ message })
     } else {
       socket.emit('FIND_GROUP_REPLY', {ok: false, body: {}});

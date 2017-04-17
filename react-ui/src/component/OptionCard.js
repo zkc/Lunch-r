@@ -1,11 +1,11 @@
 import React from 'react'
 
-const OptionCard = ({ location, update, isSelected }) => {
+const OptionCard = ({ location, updateChoice, isSelected }) => {
   return (
     <div className={ isSelected && 'selected' }>
       Option
       <p> { location } </p>
-      <button onClick={ () => update(location) }>Vote!</button>
+      <button onClick={ () => updateChoice(location) }>Vote!</button>
     </div>
   )
 }

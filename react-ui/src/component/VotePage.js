@@ -16,18 +16,21 @@ export default class VotePage extends Component {
   makeOptions() {
     const { group, user_choice } = this.state
     console.log(group)
-    if (!group.ready) { return [] };
+    if (!group.ready) { return ['Group building in progress... not ready to vote just yet'] };
     return Object.keys(group.top3).map(
       (option, i) =>
         <OptionCard key={i}
         location={ group.top3[option] }
-        update={ this.updateChoice.bind(this) }
+        updateChoice={ this.updateChoice.bind(this) }
         isSelected={ user_choice === group.top3[option] }
         />)
   }
 
   updateChoice(location) {
+    console.log(location)
+    const { socket, group_id } = this.props
     this.setState({ user_choice: location })
+    socket.send(group_id, {type: 'ADD_VOTE', user_choice: location, user_id: 1})
   }
 
   render() {
@@ -51,6 +54,7 @@ export default class VotePage extends Component {
 
     socket.send(group_id, {type: 'FIND_GROUP', group_id})
       .on('FIND_GROUP_REPLY', (res) => {
+        console.log(res)
         if(res.ok) {
           this.setState({loading: false, group_found: true, group: res.body})
           console.log(res.body)
@@ -58,5 +62,9 @@ export default class VotePage extends Component {
           this.setState({loading: false, group_found: false})
         }
       })
+
+    socket.on('VoteUpdate', (res) => {
+      console.log('got vote update', res)
+    })
   }
 }
