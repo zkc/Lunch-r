@@ -5,28 +5,14 @@ const socketIo = require('socket.io');
 
 const messageHandlerConstructor = require('./messageHandler')
 
-
-
 const app = express();
 const PORT = process.env.PORT || 5000;
-
 // Priority serve any static files.
 app.use(express.static(path.resolve(__dirname, '../react-ui/build')));
-
-// Answer API requests.
-app.get('/api', function (req, res) {
-  res.set('Content-Type', 'application/json');
-  res.send('{"message":"Hello from the lunch-r custom server!"}');
-});
-
 // All remaining requests return the React app, so it can handle routing.
 app.get('*', function(request, response) {
   response.sendFile(path.resolve(__dirname, '../react-ui/build', 'index.html'));
 });
-
-// app.listen(PORT, function () {
-//   console.log(`Listening on port ${PORT}`);
-// });
 
 ////------ Socket stuff from old-lunch-r
 
@@ -58,14 +44,13 @@ let groupIdGen = 0
 const makeNewGroup = () => {
   groupIdGen++
   const newGroupID = groupIdGen
-  const newGroup = { group_id: newGroupID }
+  const newGroup = { group_id: newGroupID, ready:false }
   groupLib[newGroupID] = newGroup
   return newGroup
 }
 
 
 io.on('connection', (socket) => {
-
   console.log('A user has connected.', io.engine.clientsCount, Date.now());
   io.sockets.emit('usersConnected', io.engine.clientsCount);
 
@@ -77,16 +62,10 @@ io.on('connection', (socket) => {
   socket.on('message', (group_id, message) => {
     const messageHandler = new messageHandlerConstructor(socket, updateLib.bind(this))
     if (group_id === 'new') {
-      console.log('new group ', message)
       const newGroup = makeNewGroup()
       socket.emit('GROUP_ID_ARRIVE', { ok: true, body: newGroup })
     }
 
-    // if (message.type === 'UPDATE_GROUP') {
-    //
-    // }
-    // switch channel and message. channel is group_id, message object has all info.
-    // Get group info from storeage
     const groupInfo = groupLib[group_id]
     if (groupInfo) {
       // need to handle updating group info

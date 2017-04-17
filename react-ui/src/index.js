@@ -8,9 +8,7 @@ import './style/index.css';
 
 ReactDOM.render(
   <BrowserRouter>
-    <Route path="/:key" render={({ match }) => {
-      return <App testprop={true} />
-    }} />
+    <Route path="/" component={App} />
   </BrowserRouter>,
   document.getElementById('root')
 );

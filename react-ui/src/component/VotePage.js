@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import OptionCard from './OptionCard'
 
 //vote page finds group after mounting.
 export default class VotePage extends Component {
@@ -8,7 +9,25 @@ export default class VotePage extends Component {
       group: {},
       loading: true,
       group_found: false,
+      user_choice: '',
     }
+  }
+
+  makeOptions() {
+    const { group, user_choice } = this.state
+    console.log(group)
+    if (!group.ready) { return [] };
+    return Object.keys(group.top3).map(
+      (option, i) =>
+        <OptionCard key={i}
+        location={ group.top3[option] }
+        update={ this.updateChoice.bind(this) }
+        isSelected={ user_choice === group.top3[option] }
+        />)
+  }
+
+  updateChoice(location) {
+    this.setState({ user_choice: location })
   }
 
   render() {
@@ -19,10 +38,9 @@ export default class VotePage extends Component {
         <p>{
           loading ? 'Collecting Votes' :
             group_found ?
-            'Good Group!' :
+            this.makeOptions() :
             'Group Not Found'
-        }
-        </p>
+        }</p>
       </div>
     )
   }
