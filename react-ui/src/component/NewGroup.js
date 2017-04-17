@@ -14,13 +14,14 @@ export default class NewGroup extends Component {
       lunch_time: '1200PM', //Definitly try moment.js.
       vote_link: '',
       group_id: '',
-      top3: {first: '', second: '', third:''}
+      top3: {first: '', second: '', third:''},
+      voteCollection: {},
     }
   }
 
   sendNewGroup() {
     const { socket, group_id } = this.props
-    socket.send(group_id, { type: 'SEND_GROUP_INFO', body: this.state }) 
+    socket.send(group_id, { type: 'SEND_GROUP_INFO', body: this.state })
   }
 
   render() {

@@ -41,10 +41,12 @@ let groupIdGen = 0
 const makeNewGroup = () => {
   groupIdGen++
   const newGroupID = groupIdGen
-  const newGroup = { group_id: newGroupID, ready:false }
+  const newGroup = { group_id: newGroupID, ready:false, voteCollection: {} }
   groupLib[newGroupID] = newGroup
   return newGroup
 }
+
+
 
 //This is stuff intended for outgoing socket messages, use messageHandler for incoming messages
 io.on('connection', (socket) => {
@@ -52,9 +54,11 @@ io.on('connection', (socket) => {
   io.sockets.emit('usersConnected', io.engine.clientsCount);
   // ------------------
 
+  console.log()
+
   const updateLib = (group_id, newData) => {
     groupLib[group_id] = newData
-    socket.emit('VoteUpdate', { newData })
+    io.sockets.emit('VoteUpdate', { newData })
   }
 
   const messageHandler = new messageHandlerConstructor(socket, updateLib.bind(this), io)
@@ -63,14 +67,12 @@ io.on('connection', (socket) => {
 
     if (group_id === 'new') {
       const newGroup = makeNewGroup()
-      console.log('here is new group', newGroup)
       socket.emit('GROUP_ID_ARRIVE', { ok: true, body: newGroup })
     }
 
     const groupInfo = groupLib[group_id]
     if (groupInfo) {
       messageHandler.setGroup(groupInfo)
-      // need to handle updating group info
       messageHandler.handle({ message })
     } else {
       socket.emit('FIND_GROUP_REPLY', {ok: false, body: {}});
