@@ -22,8 +22,9 @@ export default class NewGroup extends Component {
   sendNewGroup() {
     const { socket } = this.props
     const location_result = this.autocomplete.getPlace()
-    console.log(location_result)
-    const updated_group = Object.assign({}, this.state.group, { placeInfo: location_result })
+    const lat = location_result.geometry.location.lat();
+    const lng = location_result.geometry.location.lng();
+    const updated_group = Object.assign({}, this.state.group, { placeInfo: location_result, lat, lng })
     socket.emit('sendNewGroup', updated_group)
   }
 

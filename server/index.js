@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const http = require('http');
 const socketIo = require('socket.io');
+const fetch = require('node-fetch');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -32,6 +33,8 @@ const makeNewGroup = () => {
 }
 
 
+const API_KEY = 'AIzaSyCF30BBIcBhwLhW8Q6-tPfwPcgLyLoyzoU'
+
 io.on('connection', (socket) => {
   //new connection, nothing known
   socket.on('makeNewGroup', (name, fn) => {
@@ -40,7 +43,19 @@ io.on('connection', (socket) => {
     fn(newGroupID)
   })
   //sending out group info with group_id
-  socket.on('sendNewGroup', (groupInfo) => groupLib[groupInfo.group_id] = groupInfo)
+  socket.on('sendNewGroup', (groupInfo) => {
+    groupLib[groupInfo.group_id] = groupInfo
+    fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${groupInfo.lat},${groupInfo.lng}&rankby=distance&type=restaurant&key=${API_KEY}`)
+    .then((res) => {
+      res.json().then((json) => {
+        console.log(json)
+        //take closet three results and update groupLib.
+        // ++ store remaining options as alternatives.
+        // or! send the whole list to compoment were creator can filter out options before sending?
+        
+      })
+    })
+  })
 
   //voter page joing a group, sending group_id from URL
   socket.on('joinGroup', (group_id, fn) => {
