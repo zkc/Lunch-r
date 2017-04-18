@@ -24,18 +24,8 @@ const server = http.createServer(app)
 const io = socketIo(server);
 
 
-const groupLib = {
+const groupLib = { }
   //group_id: { ...group_data, group_id }
-  '1234': {
-    group_id: '1234',
-    leader:'Testeroni',
-    top_options: {
-      1: 'Pizza Pizza',
-      2: 'French Fry Bonanza',
-      3: 'Fishy Fish'
-    }
-  }
-}
 
 let groupIdGen = 0
 const makeNewGroup = () => {
@@ -47,7 +37,6 @@ const makeNewGroup = () => {
 }
 
 
-
 io.on('connection', (socket) => {
   const updateLib = (group_id, newData) => {
     groupLib[group_id] = newData
@@ -56,31 +45,30 @@ io.on('connection', (socket) => {
   //new connection, nothing known
   socket.on('makeNewGroup', (name, fn) => {
     const newGroupID = makeNewGroup().group_id
-    console.log('making new group', newGroupID)
     socket.join(newGroupID)
     fn(newGroupID)
   })
   //new connection with group_id
   socket.on('sendNewGroup', (groupInfo) => groupLib[groupInfo.group_id] = groupInfo)
 
-  // socket.on('message', (group_id, message) => {
-  //   if (group_id === 'new') {
-  //     const newGroup = makeNewGroup()
-  //     socket.emit('GROUP_ID_ARRIVE', { ok: true, body: newGroup })
-  //   }
-  //
-  //   const groupInfo = groupLib[group_id]
-  //   if (groupInfo) {
-  //     socket.join(group_id)
-  //     messageHandler.setGroup(groupInfo)
-  //     messageHandler.handle({ message })
-  //   } else {
-  //     socket.emit('FIND_GROUP_REPLY', {ok: false, body: {}});
-  //   }
-  // })
+  //voter page joing a group, sending group_id from URL
+  socket.on('joinGroup', (group_id, fn) => {
+    const groupInfo = groupLib[group_id]
+    if(groupInfo) {
+      socket.join(group_id)
+      fn(true, groupInfo)
+    } else {
+      fn(false)
+    }
+  })
 
-  // HOW CAN I lock in the group id on socket connection
-  // three states: no_group, group_not_found, group_connected
+  socket.on('addVote', (vote) => {
+    const group_id = Object.keys(socket.rooms)[0]
+    const { user_id, user_choice } = vote
+    groupLib[group_id].voteCollection[user_id] = user_choice
+    io.to(group_id).emit('VoteUpdate', { newData: groupLib[group_id] })
+  })
+
 
   // socket.on('disconnect', () => {
   //   console.log('A user has disconnected.', io.engine.clientsCount);
