@@ -42,13 +42,6 @@ export default class NewGroup extends Component {
       </div>
     )
   }
-  // <input id="auto" value={location} onChange={(e) => this.setState({ group: Object.assign({}, this.state.group ,{ location: e.target.value })})} />
-  // <p>Enter 3 Options</p>
-  // <input value={top3.first} onChange={(e) => this.setState({ top3: Object.assign(top3, { first: e.target.value }) })} />
-  // <input value={top3.second} onChange={(e) => this.setState({ top3: Object.assign(top3, { second: e.target.value }) })} />
-  // <input value={top3.third} onChange={(e) => this.setState({ top3: Object.assign(top3, { third: e.target.value }) })} />
-
-
 
   componentDidMount() {
     const { socket, group_id } = this.props
