@@ -43,7 +43,7 @@ io.on('connection', (socket) => {
     fn(newGroupID)
   })
   //sending out group info with group_id
-  socket.on('sendNewGroup', (groupInfo) => {
+  socket.on('sendNewGroup', (groupInfo, fn) => {
     fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${groupInfo.lat},${groupInfo.lng}&rankby=distance&type=restaurant&key=${API_KEY}`)
     .then((res) => {
       res.json().then((json) => {
@@ -58,7 +58,7 @@ io.on('connection', (socket) => {
 
         console.log(groupInfo)
         groupLib[groupInfo.group_id] = groupInfo
-
+        fn()
       })
     })
   })
