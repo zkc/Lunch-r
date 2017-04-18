@@ -8,7 +8,7 @@ export default class NewGroup extends Component {
     super(props)
     this.state = {
       group: {
-        location: 'stonewall',
+        location: '',
         init_time: Date.now(), //Maybe try moment.js??
         lunch_time: '1200PM', //Definitly try moment.js.
         group_id: '',
@@ -21,7 +21,10 @@ export default class NewGroup extends Component {
 
   sendNewGroup() {
     const { socket } = this.props
-    socket.emit('sendNewGroup', this.state.group)
+    const location_result = this.autocomplete.getPlace()
+    console.log(location_result)
+    const updated_group = Object.assign({}, this.state.group, { placeInfo: location_result })
+    socket.emit('sendNewGroup', updated_group)
   }
 
   render() {
@@ -32,7 +35,7 @@ export default class NewGroup extends Component {
         {`Group ID: ${group_id || '#'}`}
 
         <p>Enter Location</p>
-        <input value={location} onChange={(e) => this.setState({ location: e.target.value })} />
+        <input id="auto" value={this.state.search_location} onChange={(e) => this.setState({ search_location: e.target.value })} />
 
         <p>Enter 3 Options</p>
         <input value={top3.first} onChange={(e) => this.setState({ top3: Object.assign(top3, { first: e.target.value }) })} />
@@ -42,9 +45,16 @@ export default class NewGroup extends Component {
       </div>
     )
   }
+  // <input id="auto" value={location} onChange={(e) => this.setState({ group: Object.assign({}, this.state.group ,{ location: e.target.value })})} />
+
+
 
   componentDidMount() {
     const { socket, group_id } = this.props
+    const input = document.getElementById('auto')
+    const options = {}
+    this.autocomplete = new window.google.maps.places.Autocomplete(input, options)
+
     if(!group_id) {
       socket.emit('makeNewGroup', 'user_id' , (group_id) => {
         this.setState({ group: {...this.state.group, group_id } });
@@ -53,6 +63,5 @@ export default class NewGroup extends Component {
       console.log('this group is good?');
       this.setState({group_id})
     }
-
   }
 }
