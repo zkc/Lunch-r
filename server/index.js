@@ -50,11 +50,9 @@ const makeNewGroup = () => {
 
 //This is stuff intended for outgoing socket messages, use messageHandler for incoming messages
 io.on('connection', (socket) => {
-  console.log('A user has connected.', io.engine.clientsCount, Date.now());
-  io.sockets.emit('usersConnected', io.engine.clientsCount);
+  // console.log('A user has connected.', io.engine.clientsCount, Date.now());
+  // io.sockets.emit('usersConnected', io.engine.clientsCount);
   // ------------------
-
-  console.log()
 
   const updateLib = (group_id, newData) => {
     groupLib[group_id] = newData
