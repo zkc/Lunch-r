@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 
-
-
 /// Collect input data into state. sends socket message on submit.
 
 export default class NewGroup extends Component {
@@ -16,7 +14,8 @@ export default class NewGroup extends Component {
         group_id: '',
         top3: {first: 'bipity', second: 'bopity', third:'boop'},
         voteCollection: {},
-      }
+      },
+      search_location: ''
     }
   }
 
@@ -26,7 +25,6 @@ export default class NewGroup extends Component {
   }
 
   render() {
-    // Object.assign(this.state.group, { group_id: this.state.group_id})
     const { top3, location, group_id } = this.state.group
     return (
       <div>
