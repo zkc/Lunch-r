@@ -12,8 +12,6 @@ app.get('*', function(request, response) {
   response.sendFile(path.resolve(__dirname, '../react-ui/build', 'index.html'));
 });
 
-////------ Socket stuff from old-lunch-r
-
 const server = http.createServer(app)
                       .listen(PORT, () => {
                         console.log(`Listening on port ${PORT}.`);
@@ -22,8 +20,7 @@ const server = http.createServer(app)
 const io = socketIo(server);
 
 
-const groupLib = { }
-  //group_id: { ...group_data, group_id }
+const groupLib = {}
 
 let groupIdGen = 0
 const makeNewGroup = () => {
@@ -36,10 +33,6 @@ const makeNewGroup = () => {
 
 
 io.on('connection', (socket) => {
-  const updateLib = (group_id, newData) => {
-    groupLib[group_id] = newData
-    io.to(group_id).emit('VoteUpdate', { newData })
-  }
   //new connection, nothing known
   socket.on('makeNewGroup', (name, fn) => {
     const newGroupID = makeNewGroup().group_id
@@ -61,8 +54,8 @@ io.on('connection', (socket) => {
   })
 
   socket.on('addVote', (vote) => {
-    const group_id = Object.keys(socket.rooms)[0]
-    const { user_id, user_choice } = vote
+    // const group_id = Object.keys(socket.rooms)[0]
+    const { user_id, user_choice, group_id } = vote
     groupLib[group_id].voteCollection[user_id] = user_choice
     io.to(group_id).emit('VoteUpdate', { newData: groupLib[group_id] })
   })

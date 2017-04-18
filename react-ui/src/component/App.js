@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, BrowserRouter } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 
 import VotePage from './VotePage'
 import NewGroup from './NewGroup'
@@ -9,16 +9,18 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      socket: require('socket.io-client')()
+      socket: require('socket.io-client')(),
+      user_nug: {}
     };
   }
 
-  componentDidMount() {
-    const { socket } = this.state
-    socket.on('usersConnected', (count) => {
-      console.log('Connected Users: ' + count);
-    });
-  }
+  // componentWillMount() {
+  //   // check/set localStorage for a temp user_id
+  //
+  //   // if there's a past session/group_id, pick up where they left off at.
+  //   //**? can use setState
+  // }
+
 
   render() {
     const { socket } = this.state
@@ -35,7 +37,35 @@ class App extends Component {
       </div>
     );
   }
+
+  componentDidMount() {
+    const { socket } = this.state
+    socket.on('usersConnected', (count) => {
+      console.log('Connected Users: ' + count);
+    });
+
+    const json = localStorage.getItem('lunchR')
+    let user_nug
+    if(json) {
+      user_nug = JSON.parse(json)
+    } else {
+      user_nug = {
+        user_id: Date.now()
+      }
+      localStorage.setItem('lunchR', JSON.stringify(user_nug))
+    }
+    this.setState({ user_nug })
+
+  }
+
 }
 
+
 export default App;
+
+
+
+
+
+
 

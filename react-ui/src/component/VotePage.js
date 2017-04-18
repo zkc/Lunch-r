@@ -36,7 +36,7 @@ export default class VotePage extends Component {
   updateChoice(location) {
     const { socket, group_id } = this.props
     this.setState({ user_choice: location })
-    socket.emit('addVote', { user_choice: location, user_id: socket.id })
+    socket.emit('addVote', { group_id, user_choice: location, user_id: socket.id })
   }
 
   render() {
