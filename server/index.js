@@ -48,36 +48,36 @@ const makeNewGroup = () => {
 
 
 
-//This is stuff intended for outgoing socket messages, use messageHandler for incoming messages
 io.on('connection', (socket) => {
-  // console.log('A user has connected.', io.engine.clientsCount, Date.now());
-  // io.sockets.emit('usersConnected', io.engine.clientsCount);
-  // ------------------
-
   const updateLib = (group_id, newData) => {
     groupLib[group_id] = newData
-    // io.sockets.emit('VoteUpdate', { newData })
     io.to(group_id).emit('VoteUpdate', { newData })
   }
-
-  const messageHandler = new messageHandlerConstructor(socket, updateLib.bind(this), io)
-
-  socket.on('message', (group_id, message) => {
-
-    if (group_id === 'new') {
-      const newGroup = makeNewGroup()
-      socket.emit('GROUP_ID_ARRIVE', { ok: true, body: newGroup })
-    }
-
-    const groupInfo = groupLib[group_id]
-    if (groupInfo) {
-      socket.join(group_id)
-      messageHandler.setGroup(groupInfo)
-      messageHandler.handle({ message })
-    } else {
-      socket.emit('FIND_GROUP_REPLY', {ok: false, body: {}});
-    }
+  //new connection, nothing known
+  socket.on('makeNewGroup', (name, fn) => {
+    const newGroupID = makeNewGroup().group_id
+    console.log('making new group', newGroupID)
+    socket.join(newGroupID)
+    fn(newGroupID)
   })
+  //new connection with group_id
+  socket.on('sendNewGroup', (groupInfo) => groupLib[groupInfo.group_id] = groupInfo)
+
+  // socket.on('message', (group_id, message) => {
+  //   if (group_id === 'new') {
+  //     const newGroup = makeNewGroup()
+  //     socket.emit('GROUP_ID_ARRIVE', { ok: true, body: newGroup })
+  //   }
+  //
+  //   const groupInfo = groupLib[group_id]
+  //   if (groupInfo) {
+  //     socket.join(group_id)
+  //     messageHandler.setGroup(groupInfo)
+  //     messageHandler.handle({ message })
+  //   } else {
+  //     socket.emit('FIND_GROUP_REPLY', {ok: false, body: {}});
+  //   }
+  // })
 
   // HOW CAN I lock in the group id on socket connection
   // three states: no_group, group_not_found, group_connected
