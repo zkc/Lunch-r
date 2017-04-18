@@ -44,12 +44,12 @@ export default class VotePage extends Component {
     return (
       <div>
         <h3>Cast your vote</h3>
-        <p>{
+        <div>{
           loading ? 'Collecting Votes' :
             group_found ?
             this.makeOptions() :
             'Group Not Found'
-        }</p>
+        }</div>
       </div>
     )
   }

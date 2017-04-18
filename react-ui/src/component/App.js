@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Link } from 'react-router-dom';
 
 import VotePage from './VotePage'
 import NewGroup from './NewGroup'
@@ -20,12 +20,16 @@ class App extends Component {
       <div className="App">
         <div className="App-header">
           <h2>Welcome to Lunch-r</h2>
+          <Link to="/new">
+            <button>Make a new lunch-r group</button>
+          </Link>
         </div>
         <div className="App-intro">
           <Route path={'/join/:group_id'} render={({ match }) => <VotePage socket={socket} user_nug={user_nug} group_id={ match.params.group_id } />} />
           <Route exact path={'/new'} render={({ match }) => <NewGroup socket={socket} group_id={ match.params.group_id } />} />
           <Route path={'/new/:group_id'} render={({ match }) => <NewGroup socket={socket} group_id={ match.params.group_id } />} />
         </div>
+
       </div>
     );
   }
