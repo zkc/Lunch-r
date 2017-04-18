@@ -44,15 +44,21 @@ io.on('connection', (socket) => {
   })
   //sending out group info with group_id
   socket.on('sendNewGroup', (groupInfo) => {
-    groupLib[groupInfo.group_id] = groupInfo
     fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${groupInfo.lat},${groupInfo.lng}&rankby=distance&type=restaurant&key=${API_KEY}`)
     .then((res) => {
       res.json().then((json) => {
-        console.log(json)
+        const firstThree = json.results.slice(0,3)
+        console.log(firstThree)
+        groupInfo.top3.first = firstThree[0].name
+        groupInfo.top3.second = firstThree[1].name
+        groupInfo.top3.third = firstThree[2].name
         //take closet three results and update groupLib.
         // ++ store remaining options as alternatives.
         // or! send the whole list to compoment were creator can filter out options before sending?
-        
+
+        console.log(groupInfo)
+        groupLib[groupInfo.group_id] = groupInfo
+
       })
     })
   })
