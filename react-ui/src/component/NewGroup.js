@@ -56,6 +56,7 @@ export default class NewGroup extends Component {
         this.setState({ group: {...this.state.group, group_id } });
       })
     } else {
+      //this is going away? not really reloading /new, eventaully have user profile with groups, etc.
       console.log('this group is good?');
       this.setState({group_id})
     }

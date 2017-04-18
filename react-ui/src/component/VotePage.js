@@ -43,7 +43,7 @@ export default class VotePage extends Component {
     return (
       <div>
         <h3>Cast your vote</h3>
-        <div>{
+        <div className="option-container">{
           loading ? 'Collecting Votes' :
             group_found ?
             this.makeOptions() :

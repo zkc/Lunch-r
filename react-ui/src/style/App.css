@@ -2,11 +2,6 @@
   text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
 .App-header {
   background-color: #222;
   height: 150px;
@@ -14,14 +9,31 @@
   color: white;
 }
 
-.App-intro {
-  font-size: large;
-}
 
-.App a {
-  color: #f60;
-}
-
+/*Options stuff*/
 .selected {
   background-color: red;
+}
+
+.option-card {
+  border: 2px solid blue;
+  margin: 20px auto;
+  width: 400px;
+}
+
+.option-vote-total {
+  display: inline;
+  font-size: 3em;
+}
+
+.option-location {
+  display: inline;
+}
+
+.option-vote-button {
+  display: inline;
+}
+
+.option-container {
+
 }
