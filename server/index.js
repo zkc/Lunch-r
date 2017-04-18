@@ -3,8 +3,6 @@ const path = require('path');
 const http = require('http');
 const socketIo = require('socket.io');
 
-const messageHandlerConstructor = require('./messageHandler')
-
 const app = express();
 const PORT = process.env.PORT || 5000;
 // Priority serve any static files.
@@ -48,7 +46,7 @@ io.on('connection', (socket) => {
     socket.join(newGroupID)
     fn(newGroupID)
   })
-  //new connection with group_id
+  //sending out group info with group_id
   socket.on('sendNewGroup', (groupInfo) => groupLib[groupInfo.group_id] = groupInfo)
 
   //voter page joing a group, sending group_id from URL

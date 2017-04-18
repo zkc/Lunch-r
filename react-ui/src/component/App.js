@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
 import { Route, BrowserRouter } from 'react-router-dom';
 
-import NotFound from './NotFound'
 import VotePage from './VotePage'
 import NewGroup from './NewGroup'
 import '../style/App.css';
-
-///to join a group, take group id and send socket message on after mounting.
-//router ignores id but uses it to send a websocket message back.
 
 class App extends Component {
   constructor(props) {
@@ -21,11 +17,7 @@ class App extends Component {
     const { socket } = this.state
     socket.on('usersConnected', (count) => {
       console.log('Connected Users: ' + count);
-      // socket.send('Join Group', 'abc123')
     });
-    // socket.on('FIND_GROUP_REPLY', (res) => {
-    //   console.log('response', res)
-    // })
   }
 
   render() {
