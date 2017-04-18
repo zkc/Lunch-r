@@ -14,14 +14,6 @@ class App extends Component {
     };
   }
 
-  // componentWillMount() {
-  //   // check/set localStorage for a temp user_id
-  //
-  //   // if there's a past session/group_id, pick up where they left off at.
-  //   //**? can use setState
-  // }
-
-
   render() {
     const { socket, user_nug } = this.state
     return (
@@ -43,7 +35,7 @@ class App extends Component {
     socket.on('usersConnected', (count) => {
       console.log('Connected Users: ' + count);
     });
-
+    //probably move is out of the DidMount()
     const json = localStorage.getItem('lunchR')
     let user_nug
     if(json) {
@@ -57,9 +49,7 @@ class App extends Component {
     this.setState({ user_nug })
 
   }
-
 }
-
 
 export default App;
 
