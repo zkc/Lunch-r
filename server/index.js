@@ -58,7 +58,8 @@ io.on('connection', (socket) => {
 
   const updateLib = (group_id, newData) => {
     groupLib[group_id] = newData
-    io.sockets.emit('VoteUpdate', { newData })
+    // io.sockets.emit('VoteUpdate', { newData })
+    io.to(group_id).emit('VoteUpdate', { newData })
   }
 
   const messageHandler = new messageHandlerConstructor(socket, updateLib.bind(this), io)
@@ -72,6 +73,7 @@ io.on('connection', (socket) => {
 
     const groupInfo = groupLib[group_id]
     if (groupInfo) {
+      socket.join(group_id)
       messageHandler.setGroup(groupInfo)
       messageHandler.handle({ message })
     } else {

@@ -65,10 +65,9 @@ export default class VotePage extends Component {
 
     socket.send(group_id, {type: 'FIND_GROUP', group_id})
       .on('FIND_GROUP_REPLY', (res) => {
-        console.log(res)
+        console.log(socket)
         if(res.ok) {
           this.setState({loading: false, group_found: true, group: res.body})
-          console.log(res.body)
         } else {
           this.setState({loading: false, group_found: false})
         }
