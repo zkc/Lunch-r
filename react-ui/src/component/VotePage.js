@@ -15,7 +15,6 @@ export default class VotePage extends Component {
 
   makeOptions() {
     const { group, user_choice } = this.state
-    // if (!group.ready) { return ['Group building in progress... not ready to vote just yet'] };
     return Object.keys(group.top3).map(
       (option, i) => {
         const count = Object.keys(group.voteCollection).reduce((res, cur) => {
