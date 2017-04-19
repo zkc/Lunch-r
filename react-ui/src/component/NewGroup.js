@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import Script from 'react-load-script';
 
+const API_KEY = 'AIzaSyCF30BBIcBhwLhW8Q6-tPfwPcgLyLoyzoU'
 /// Collect input data into state. sends socket message on submit.
 
 export default class NewGroup extends Component {
@@ -34,9 +36,14 @@ export default class NewGroup extends Component {
     const { group: { group_id } , place_ready } = this.state
     return (
       <div className="vote-page">
+        <Script
+          url={`https://maps.googleapis.com/maps/api/js?key=${API_KEY}&libraries=places`}
+          onLoad={() => this.googleReady()}
+          onError={() => this.error()}
+        />
         <h3>Create New Group</h3>
         <p>{`Group ID: ${group_id || '#'}`}</p>
-        <input id="auto" />
+        <input placeholder="Where y'all at?" id="auto" />
         {
           place_ready ?
           <div className="create group-button" onClick={() => this.sendNewGroup()}></div>
@@ -47,8 +54,7 @@ export default class NewGroup extends Component {
     )
   }
 
-  componentDidMount() {
-    const { socket, group_id } = this.props
+  googleReady () {
     const input = document.getElementById('auto')
     const options = {}
     this.autocomplete = new window.google.maps.places.Autocomplete(input, options)
@@ -56,6 +62,15 @@ export default class NewGroup extends Component {
     window.google.maps.event.addListener(this.autocomplete, 'place_changed', (e) => {
       this.setState({ place_ready: true })
     });
+
+  }
+
+  error() {
+    console.log('error with google places')
+  }
+
+  componentDidMount() {
+    const { socket, group_id } = this.props
 
     if(!group_id) {
       socket.emit('makeNewGroup', 'user_id' , (group_id) => {
