@@ -22,6 +22,30 @@
   grid-row: 1;
 }
 
+#auto {
+  width: 80%;
+  max-width: 500px;
+  height: 50px;
+  font-size: 1.5em;
+  font-family: inherit;
+  text-align: center;
+}
+
+.group-button {
+  width: 64px;
+  height: 64px;
+  margin: 10px auto;
+
+}
+
+.enter {
+  background: url('https://s3-us-west-1.amazonaws.com/zuck-bucket/arrow-up-orange.png') center no-repeat;
+}
+
+.create {
+  background: url('https://s3-us-west-1.amazonaws.com/zuck-bucket/tick.png') center no-repeat;
+}
+
 
 .make-new-group {
   grid-column: 3;
@@ -41,6 +65,8 @@
 .vote-page {
   color: #F4AC32
 }
+
+
 
 /*Options stuff*/
 

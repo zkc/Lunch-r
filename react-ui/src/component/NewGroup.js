@@ -15,7 +15,8 @@ export default class NewGroup extends Component {
         top3: {first: 'bipity', second: 'bopity', third:'boop'},
         voteCollection: {},
       },
-      search_location: ''
+      search_location: '',
+      place_ready: false
     }
   }
 
@@ -31,16 +32,18 @@ export default class NewGroup extends Component {
   }
 
   render() {
-    const { top3, location, group_id } = this.state.group
+    const { location, group_id } = this.state.group
     return (
-      <div>
+      <div className="vote-page">
         <h3>Create New Group</h3>
-        {`Group ID: ${group_id || '#'}`}
-
-        <p>Enter Location</p>
-        <input id="auto" value={this.state.search_location} onChange={(e) => this.setState({ search_location: e.target.value })} />
-
-        <button onClick={() => this.sendNewGroup()}>Create Group</button>
+        <p>{`Group ID: ${group_id || '#'}`}</p>
+        <input id="auto" />
+        {
+          this.state.place_ready ?
+          <div className="create group-button" onClick={() => this.sendNewGroup()}></div>
+          :
+          <div className="enter group-button" ></div>
+        }
       </div>
     )
   }
@@ -50,6 +53,10 @@ export default class NewGroup extends Component {
     const input = document.getElementById('auto')
     const options = {}
     this.autocomplete = new window.google.maps.places.Autocomplete(input, options)
+
+    window.google.maps.event.addListener(this.autocomplete, 'place_changed', (e) => {
+      this.setState({ place_ready: true })
+    });
 
     if(!group_id) {
       socket.emit('makeNewGroup', 'user_id' , (group_id) => {
