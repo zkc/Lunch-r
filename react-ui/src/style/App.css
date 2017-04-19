@@ -61,6 +61,19 @@
   /*0072BB*/
 }
 
+.new-group-welcome {
+  border-radius: 25px;
+  background-color: #8FC93A;
+  text-decoration: none;
+  font-size: 2em;
+  color: #1E91D6;
+
+  /*width: 200px;*/
+  padding: 20px;
+  display: inline-block;
+  margin: 30px auto;
+}
+
 
 .vote-page {
   color: #F4AC32

@@ -25,6 +25,11 @@ class App extends Component {
           </Link>
         </div>
         <div className="App-intro">
+          <Route exact path={'/'} render={() =>
+            <Link className="new-group-welcome" to="/new">
+              Start a new Group
+            </Link>
+          } />
           <Route path={'/join/:group_id'} render={({ match }) => <VotePage socket={socket} user_nug={user_nug} group_id={ match.params.group_id } />} />
           <Route exact path={'/new'} render={({ match }) => <NewGroup socket={socket} history={this.props.history} group_id={ match.params.group_id } />} />
           <Route path={'/new/:group_id'} render={({ match }) => <NewGroup socket={socket} group_id={ match.params.group_id } />} />
