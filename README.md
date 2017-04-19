@@ -2,25 +2,10 @@ Lunch-r
 
 Get a group of folks to actually pick a place to eat.
 
+Live example: https://lunch-r.herokuapp.com/join/1
 
-original fetch
-`
-fetch('/api')
-  .then(response => {
-    if (!response.ok) {
-      throw new Error(`status ${response.status}`);
-    }
-    return response.json();
-  })
-  .then(json => {
-    this.setState({
-      message: json.message,
-      fetching: false
-    });
-  }).catch(e => {
-    this.setState({
-      message: `API call failed: ${e}`,
-      fetching: false
-    });
-  })
-`
+Usage: 
+ - Find your location. Currently the app uses the three closest restaurants.
+ - Click the green check to create a group
+ - Share the URL! Anyone who joins can vote on where to eat
+ 
