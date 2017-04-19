@@ -5,7 +5,7 @@ const socketIo = require('socket.io');
 const fetch = require('node-fetch');
 
 //API_KEY here
-const API_KEY = process.env.API_KEY
+const API_KEY = process.env.GOOG_API
 
 const app = express();
 const PORT = process.env.PORT || 5000;

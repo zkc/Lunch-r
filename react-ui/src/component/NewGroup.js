@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import Script from 'react-load-script';
 
 // API_KEY here
-const API_KEY = process.env.API_KEY
+console.log(process.env)
+const API_KEY = process.env.GOOG_API
+
 
 /// Collect input data into state. sends socket message on submit.
 
