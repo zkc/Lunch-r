@@ -23,7 +23,6 @@ const server = http.createServer(app)
 
 const io = socketIo(server);
 
-
 const groupLib = {}
 
 let groupIdGen = 0
@@ -36,13 +35,12 @@ const makeNewGroup = () => {
 }
 
 
-
 io.on('connection', (socket) => {
   //new connection, nothing known
   socket.on('makeNewGroup', (name, fn) => {
     const newGroupID = makeNewGroup().group_id
     socket.join(newGroupID)
-    fn(newGroupID)
+    fn(newGroupID, API_KEY)
   })
   //sending out group info with group_id
   socket.on('sendNewGroup', (groupInfo, fn) => {
