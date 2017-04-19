@@ -38,12 +38,13 @@ export default class NewGroup extends Component {
     return (
       <div className="vote-page">
         {
-          api_key &&
+          api_key ?
           <Script
           url={`https://maps.googleapis.com/maps/api/js?key=${api_key}&libraries=places`}
           onLoad={() => this.googleReady()}
           onError={() => this.error()}
           />
+          : null
         }
         <h3>Create New Group</h3>
         <p>{`Group ID: ${group_id || '#'}`}</p>
@@ -78,7 +79,7 @@ export default class NewGroup extends Component {
 
     if(!group_id) {
       socket.emit('makeNewGroup', 'user_id' , (group_id, api_key) => {
-        this.setState({ group: { ...this.state.group, group_id, api_key } });
+        this.setState({ group: { ...this.state.group, group_id }, api_key });
       })
     } else {
       //this is going away? not really reloading /new, eventaully have user profile with groups, etc.

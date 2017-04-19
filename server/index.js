@@ -5,7 +5,7 @@ const socketIo = require('socket.io');
 const fetch = require('node-fetch');
 
 //API_KEY here
-const API_KEY = process.env.GOOG_API
+const API_KEY = process.env.GOOG_API 
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -40,6 +40,7 @@ io.on('connection', (socket) => {
   socket.on('makeNewGroup', (name, fn) => {
     const newGroupID = makeNewGroup().group_id
     socket.join(newGroupID)
+    console.log(newGroupID, API_KEY);
     fn(newGroupID, API_KEY)
   })
   //sending out group info with group_id
