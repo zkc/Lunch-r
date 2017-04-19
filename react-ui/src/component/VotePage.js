@@ -16,16 +16,17 @@ export default class VotePage extends Component {
     const { group, user_choice } = this.state
     return Object.keys(group.top3).map(
       (option, i) => {
-        const count = Object.keys(group.voteCollection).reduce((res, cur) => {
-          group.voteCollection[cur] === group.top3[option] ? res++ : res
+        const currentLocation = group.top3[option]
+        const totalVoteCount = Object.keys(group.voteCollection).reduce((res, user_id) => {
+          group.voteCollection[user_id] === currentLocation ? res++ : res
           return res
         }, 0)
         return (
           <OptionCard key={i}
-          location={ group.top3[option] }
+          location={ currentLocation }
           updateChoice={ this.updateChoice.bind(this) }
-          isSelected={ user_choice === group.top3[option] }
-          voteTotal={ count }
+          isSelected={ user_choice === currentLocation }
+          voteTotal={ totalVoteCount }
           />
         )
       }).sort((a,b) => {
