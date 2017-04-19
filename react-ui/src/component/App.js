@@ -10,11 +10,10 @@ class App extends Component {
     super(props);
     this.state = {
       socket: require('socket.io-client')(),
-      user_nug: {}
+      user_nug: { user_id: null }
     };
   }
 
-  // <div className="make-new-group">Make a new lunch-r group</div>
   render() {
     const { socket, user_nug } = this.state
     return (
@@ -35,8 +34,6 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const { socket } = this.state
-    //probably move is out of the DidMount()
     const json = localStorage.getItem('lunchR')
     let user_nug
     if(json) {
@@ -52,10 +49,3 @@ class App extends Component {
 }
 
 export default App;
-
-
-
-
-
-
-

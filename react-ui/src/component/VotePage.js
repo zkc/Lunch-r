@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import OptionCard from './OptionCard'
 
-//vote page finds group after mounting.
 export default class VotePage extends Component {
   constructor(props) {
     super(props)
@@ -48,10 +47,11 @@ export default class VotePage extends Component {
       <div className="vote-page">
         <h3>{`Group: ${group_id}`}</h3>
         <div className="option-container">{
-          loading ? 'Collecting Votes' :
+          loading ?
+            'Collecting Votes' :
             group_found ?
-            this.makeOptions() :
-            'Group Not Found'
+              this.makeOptions() :
+              'Group Not Found'
         }</div>
       </div>
     )

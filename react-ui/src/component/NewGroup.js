@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import Script from 'react-load-script';
 
-
-/// Collect input data into state. sends socket message on submit.
-
 export default class NewGroup extends Component {
   constructor(props) {
     super(props)
@@ -33,6 +30,21 @@ export default class NewGroup extends Component {
     })
   }
 
+  googleReady () {
+    const input = document.getElementById('auto')
+    const options = {}
+
+    this.autocomplete = new window.google.maps.places.Autocomplete(input, options)
+
+    window.google.maps.event.addListener(this.autocomplete, 'place_changed', (e) => {
+      this.setState({ place_ready: true })
+    });
+  }
+
+  error() {
+    console.log('error with google places')
+  }
+
   render() {
     const { group: { group_id } , place_ready, api_key } = this.state
     return (
@@ -46,7 +58,7 @@ export default class NewGroup extends Component {
           />
           : null
         }
-        <h3>Create New Group</h3>
+        <h3>Create New Lunch-r Group</h3>
         <p>{`Group ID: ${group_id || '#'}`}</p>
         <input placeholder="Where y'all at?" id="auto" />
         {
@@ -59,31 +71,10 @@ export default class NewGroup extends Component {
     )
   }
 
-  googleReady () {
-    const input = document.getElementById('auto')
-    const options = {}
-    this.autocomplete = new window.google.maps.places.Autocomplete(input, options)
-
-    window.google.maps.event.addListener(this.autocomplete, 'place_changed', (e) => {
-      this.setState({ place_ready: true })
-    });
-
-  }
-
-  error() {
-    console.log('error with google places')
-  }
-
   componentDidMount() {
-    const { socket, group_id } = this.props
-
-    if(!group_id) {
-      socket.emit('makeNewGroup', 'user_id' , (group_id, api_key) => {
-        this.setState({ group: { ...this.state.group, group_id }, api_key });
-      })
-    } else {
-      //this is going away? not really reloading /new, eventaully have user profile with groups, etc.
-      this.setState({group_id})
-    }
+    const { socket } = this.props
+    socket.emit('makeNewGroup', 'user_id' , (group_id, api_key) => {
+      this.setState({ group: { ...this.state.group, group_id }, api_key });
+    })
   }
 }

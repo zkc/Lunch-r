@@ -4,8 +4,7 @@ const http = require('http');
 const socketIo = require('socket.io');
 const fetch = require('node-fetch');
 
-//API_KEY here
-const API_KEY = process.env.GOOG_API 
+const API_KEY = process.env.GOOG_API || require('./api')
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -36,11 +35,10 @@ const makeNewGroup = () => {
 
 
 io.on('connection', (socket) => {
-  //new connection, nothing known
+  //new connection, returns API key
   socket.on('makeNewGroup', (name, fn) => {
     const newGroupID = makeNewGroup().group_id
     socket.join(newGroupID)
-    console.log(newGroupID, API_KEY);
     fn(newGroupID, API_KEY)
   })
   //sending out group info with group_id
@@ -49,7 +47,6 @@ io.on('connection', (socket) => {
     .then((res) => {
       res.json().then((json) => {
         const firstThree = json.results.slice(0,3)
-        console.log(firstThree)
         groupInfo.top3.first = firstThree[0].name
         groupInfo.top3.second = firstThree[1].name
         groupInfo.top3.third = firstThree[2].name
@@ -57,7 +54,6 @@ io.on('connection', (socket) => {
         // ++ store remaining options as alternatives.
         // or! send the whole list to compoment were creator can filter out options before sending?
 
-        console.log(groupInfo)
         groupLib[groupInfo.group_id] = groupInfo
         fn()
       })
@@ -76,7 +72,6 @@ io.on('connection', (socket) => {
   })
 
   socket.on('addVote', (vote) => {
-    // const group_id = Object.keys(socket.rooms)[0]
     const { user_id, user_choice, group_id } = vote
     groupLib[group_id].voteCollection[user_id] = user_choice
     io.to(group_id).emit('VoteUpdate', { newData: groupLib[group_id] })
