@@ -29,6 +29,8 @@ export default class VotePage extends Component {
           voteTotal={ count }
           />
         )
+      }).sort((a,b) => {
+        return b.props.voteTotal - a.props.voteTotal
       })
   }
 
