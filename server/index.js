@@ -4,7 +4,7 @@ const http = require('http');
 const socketIo = require('socket.io');
 const fetch = require('node-fetch');
 
-const API_KEY = 'AIzaSyCF30BBIcBhwLhW8Q6-tPfwPcgLyLoyzoU'
+//API_KEY here
 
 const app = express();
 const PORT = process.env.PORT || 5000;

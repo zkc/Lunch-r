@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import Script from 'react-load-script';
 
-const API_KEY = 'AIzaSyCF30BBIcBhwLhW8Q6-tPfwPcgLyLoyzoU'
+// API_KEY here
+
 /// Collect input data into state. sends socket message on submit.
 
 export default class NewGroup extends Component {
