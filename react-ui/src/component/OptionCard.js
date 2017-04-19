@@ -5,7 +5,9 @@ const OptionCard = ({ location, updateChoice, isSelected, voteTotal }) => {
     <div className={ `option-card ${isSelected ? 'selected' : ''}` }>
       <p className="option-vote-total" > { voteTotal } </p>
       <p className="option-location"> { location } </p>
-      <button className="option-vote-button" onClick={ () => updateChoice(location) }>Vote!</button>
+      <div className="option-vote-button" onClick={ () => updateChoice(location) }>
+        <img src="https://s3-us-west-1.amazonaws.com/zuck-bucket/tick.png" />
+      </div>
     </div>
   )
 }

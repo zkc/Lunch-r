@@ -40,9 +40,11 @@ export default class VotePage extends Component {
 
   render() {
     const { loading, group_found } = this.state
+    const { group_id, user_nug } = this.props
+
     return (
-      <div>
-        <h3>Cast your vote</h3>
+      <div className="vote-page">
+        <h3>{`Group: ${group_id}`}</h3>
         <div className="option-container">{
           loading ? 'Collecting Votes' :
             group_found ?

@@ -1,39 +1,105 @@
+/*App stuffs*/
 .App {
   text-align: center;
+
 }
 
 .App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+  background-color: #F4AC32;
+  height: 60px;
+  color: #1E91D6;
+
+
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+  grid-auto-rows: minmax(50px, auto);
+
 }
 
+.app-title {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+
+.make-new-group {
+  grid-column: 3;
+  grid-row: 1;
+  margin: 10px;
+  border-radius: 25px;
+  background-color: #8FC93A;
+
+  align-self: center;
+  padding: 10px;
+  text-decoration: none;
+  color: #1E91D6;
+  /*0072BB*/
+}
+
+
+.vote-page {
+  color: #F4AC32
+}
 
 /*Options stuff*/
-.selected {
-  background-color: red;
-}
 
 .option-card {
-  border: 2px solid blue;
-  margin: 20px auto;
-  width: 400px;
+  grid-column: 2;
+  /*grid-row: 2 / 5;*/
+  /*border: 3px solid #5D737E;*/
+  /*margin: 20px auto;*/
+  min-width: 400px;
+  height: 125px;
+  /*background-color: #1E91D6;*/
+  /*color: #F4AC32;*/
+
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+  grid-auto-rows: minmax(100px, auto);
 }
 
 .option-vote-total {
-  display: inline;
-  font-size: 3em;
+  justify-self: center;
+  align-self: center;
+  font-size: 4em;
 }
 
 .option-location {
-  display: inline;
+  justify-self: center;
+  align-self: center;
 }
 
 .option-vote-button {
-  display: inline;
+  display: inline-block;
+  margin: 20px;
+  border-radius: 30px;
+  justify-self: center;
+  align-self: center;
+  /*border: 3px solid #5D737E;*/
 }
 
 .option-container {
-
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+  grid-auto-rows: minmax(100px, auto);
 }
+
+.selected {
+  background-color: #F5B82E;
+  color: #0072BB
+}
+
+.selected .option-vote-button {
+  background-color: #F5B82E;
+  border: none;
+}
+
+
+
+
+
+
+

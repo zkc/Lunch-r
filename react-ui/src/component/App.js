@@ -14,14 +14,15 @@ class App extends Component {
     };
   }
 
+  // <div className="make-new-group">Make a new lunch-r group</div>
   render() {
     const { socket, user_nug } = this.state
     return (
       <div className="App">
         <div className="App-header">
-          <h2>Welcome to Lunch-r</h2>
-          <Link to="/new">
-            <button>Make a new lunch-r group</button>
+          <h2 className="app-title">Lunch-r</h2>
+          <Link className="make-new-group" to="/new">
+            Start a new Group
           </Link>
         </div>
         <div className="App-intro">
