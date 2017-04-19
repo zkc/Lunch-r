@@ -30,7 +30,7 @@ export default class NewGroup extends Component {
     })
   }
 
-  googleReady () {
+  googleReady() {
     const input = document.getElementById('auto')
     const options = {}
 
@@ -48,7 +48,7 @@ export default class NewGroup extends Component {
   render() {
     const { group: { group_id } , place_ready, api_key } = this.state
     return (
-      <div className="vote-page">
+      <section className="vote-page">
         {
           api_key ?
           <Script
@@ -64,10 +64,9 @@ export default class NewGroup extends Component {
         {
           place_ready ?
           <div className="create group-button" onClick={() => this.sendNewGroup()}></div>
-          :
-          <div className="enter group-button" ></div>
+          : <div className="enter group-button" ></div>
         }
-      </div>
+      </section>
     )
   }
 
