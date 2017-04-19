@@ -22,7 +22,7 @@ it('renders without crashing', () => {
 
 it('displays enter icon on first load', () => {
   const wrapper = mount(<BrowserRouter><VotePage socket={fake_socket}/></BrowserRouter>)
-  const optionContainer = wrapper.find('.enter')
+  const optionContainer = wrapper.find('.option-container')
   expect(optionContainer.length).toBe(1)
-  // expect(optionContainer.text()).toBe('Collecting Votes')
+  expect(optionContainer.text()).toBe('Collecting Votes')
 })

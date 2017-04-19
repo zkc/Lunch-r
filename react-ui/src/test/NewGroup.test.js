@@ -22,8 +22,7 @@ it('renders without crashing', () => {
 
 it('displays loading message on first load', () => {
   const wrapper = mount(<BrowserRouter><NewGroup socket={fake_socket}/></BrowserRouter>)
-  const optionContainer = wrapper.find('.option-container')
+  const optionContainer = wrapper.find('.enter')
   expect(optionContainer.length).toBe(1)
-  expect(optionContainer.text()).toBe('Collecting Votes')
 })
 
