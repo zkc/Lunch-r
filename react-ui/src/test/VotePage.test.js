@@ -20,3 +20,9 @@ it('renders without crashing', () => {
     , div);
 });
 
+it('displays loading message on first load', () => {
+  const wrapper = mount(<BrowserRouter><VotePage socket={fake_socket}/></BrowserRouter>)
+  const optionContainer = wrapper.find('.option-container')
+  expect(optionContainer.length).toBe(1)
+  expect(optionContainer.text()).toBe('Collecting Votes')
+})
