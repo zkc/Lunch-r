@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
 
 /// Collect input data into state. sends socket message on submit.
 
@@ -32,14 +31,14 @@ export default class NewGroup extends Component {
   }
 
   render() {
-    const { location, group_id } = this.state.group
+    const { group: { group_id } , place_ready } = this.state
     return (
       <div className="vote-page">
         <h3>Create New Group</h3>
         <p>{`Group ID: ${group_id || '#'}`}</p>
         <input id="auto" />
         {
-          this.state.place_ready ?
+          place_ready ?
           <div className="create group-button" onClick={() => this.sendNewGroup()}></div>
           :
           <div className="enter group-button" ></div>

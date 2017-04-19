@@ -36,9 +36,6 @@ class App extends Component {
 
   componentDidMount() {
     const { socket } = this.state
-    socket.on('usersConnected', (count) => {
-      console.log('Connected Users: ' + count);
-    });
     //probably move is out of the DidMount()
     const json = localStorage.getItem('lunchR')
     let user_nug
@@ -51,7 +48,6 @@ class App extends Component {
       localStorage.setItem('lunchR', JSON.stringify(user_nug))
     }
     this.setState({ user_nug })
-
   }
 }
 
