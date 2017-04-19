@@ -1,14 +1,12 @@
 /*App stuffs*/
 .App {
   text-align: center;
-
 }
 
 .App-header {
   background-color: #F4AC32;
   height: 60px;
   color: #1E91D6;
-
 
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -35,7 +33,6 @@
   width: 64px;
   height: 64px;
   margin: 10px auto;
-
 }
 
 .enter {
@@ -45,7 +42,6 @@
 .create {
   background: url('https://s3-us-west-1.amazonaws.com/zuck-bucket/tick.png') center no-repeat;
 }
-
 
 .make-new-group {
   grid-column: 3;
@@ -68,30 +64,22 @@
   font-size: 2em;
   color: #1E91D6;
 
-  /*width: 200px;*/
   padding: 20px;
   display: inline-block;
   margin: 30px auto;
 }
-
 
 .vote-page {
   color: #F4AC32
 }
 
 
-
 /*Options stuff*/
 
 .option-card {
   grid-column: 2;
-  /*grid-row: 2 / 5;*/
-  /*border: 3px solid #5D737E;*/
-  /*margin: 20px auto;*/
   min-width: 400px;
   height: 125px;
-  /*background-color: #1E91D6;*/
-  /*color: #F4AC32;*/
 
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -116,7 +104,6 @@
   border-radius: 30px;
   justify-self: center;
   align-self: center;
-  /*border: 3px solid #5D737E;*/
 }
 
 .option-container {
