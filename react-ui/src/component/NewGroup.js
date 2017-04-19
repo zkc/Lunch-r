@@ -78,7 +78,6 @@ export default class NewGroup extends Component {
       })
     } else {
       //this is going away? not really reloading /new, eventaully have user profile with groups, etc.
-      console.log('this group is good?');
       this.setState({group_id})
     }
   }

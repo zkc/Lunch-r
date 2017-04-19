@@ -4,6 +4,8 @@ const http = require('http');
 const socketIo = require('socket.io');
 const fetch = require('node-fetch');
 
+const API_KEY = 'AIzaSyCF30BBIcBhwLhW8Q6-tPfwPcgLyLoyzoU'
+
 const app = express();
 const PORT = process.env.PORT || 5000;
 // Priority serve any static files.
@@ -33,7 +35,6 @@ const makeNewGroup = () => {
 }
 
 
-const API_KEY = 'AIzaSyCF30BBIcBhwLhW8Q6-tPfwPcgLyLoyzoU'
 
 io.on('connection', (socket) => {
   //new connection, nothing known
