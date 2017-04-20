@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import OptionCard from './OptionCard'
 
-/// At lunchtime, switch join page to a map that shows where lunch is at
+/// when app hits user's lunchtime, switch join page to a map that shows where lunch is at
 
 export default class VotePage extends Component {
   constructor(props) {
@@ -16,7 +16,7 @@ export default class VotePage extends Component {
 
   makeOptions() {
     const { group, user_choice } = this.state
-    
+
     const allVoteCount = group.top3.map((option, i) => {
       const totalVoteCount = Object.keys(group.voteCollection).reduce((res, user_id) => {
         group.voteCollection[user_id] === option ? res++ : res
@@ -37,7 +37,7 @@ export default class VotePage extends Component {
         updateChoice={ this.updateChoice.bind(this) }
         isSelected={ user_choice === option.currentLocation }
         voteTotal={ option.totalVoteCount }
-        topPad={optionLocationSortedByVoteCount.indexOf(option.currentLocation)*100}
+        topPad={optionLocationSortedByVoteCount.indexOf(option.currentLocation)*120}
         />
       )
     })
@@ -78,7 +78,6 @@ export default class VotePage extends Component {
     })
 
     socket.on('VoteUpdate', (res) => {
-      console.log('vote update', res.newData.top3)
       this.setState( { group: res.newData } )
     })
   }
