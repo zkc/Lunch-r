@@ -46,10 +46,9 @@ io.on('connection', (socket) => {
     fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${groupInfo.lat},${groupInfo.lng}&rankby=distance&type=restaurant&key=${API_KEY}`)
     .then((res) => {
       res.json().then((json) => {
-        const firstThree = json.results.slice(0,3)
-        groupInfo.top3.first = firstThree[0].name
-        groupInfo.top3.second = firstThree[1].name
-        groupInfo.top3.third = firstThree[2].name
+        const firstThree = json.results.slice(0,3).map(res => res.name)
+        groupInfo.top3 = firstThree
+
         //take closet three results and update groupLib.
         // ++ store remaining options as alternatives.
         // or! send the whole list to compoment were creator can filter out options before sending?

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import OptionCard from './OptionCard'
 
+/// At lunchtime, switch join page to a map that shows where lunch is at
+
 export default class VotePage extends Component {
   constructor(props) {
     super(props)
@@ -14,24 +16,33 @@ export default class VotePage extends Component {
 
   makeOptions() {
     const { group, user_choice } = this.state
-    return Object.keys(group.top3).map(
-      (option, i) => {
-        const currentLocation = group.top3[option]
-        const totalVoteCount = Object.keys(group.voteCollection).reduce((res, user_id) => {
-          group.voteCollection[user_id] === currentLocation ? res++ : res
-          return res
-        }, 0)
-        return (
-          <OptionCard key={i}
-          location={ currentLocation }
-          updateChoice={ this.updateChoice.bind(this) }
-          isSelected={ user_choice === currentLocation }
-          voteTotal={ totalVoteCount }
-          />
-        )
-      }).sort((a,b) => {
-        return b.props.voteTotal - a.props.voteTotal
-      })
+    
+    const allVoteCount = group.top3.map((option, i) => {
+      const totalVoteCount = Object.keys(group.voteCollection).reduce((res, user_id) => {
+        group.voteCollection[user_id] === option ? res++ : res
+        return res
+      }, 0)
+
+      return { currentLocation: option, totalVoteCount }
+    })
+
+    const optionLocationSortedByVoteCount = allVoteCount.slice().sort((a,b) => {
+      return b.totalVoteCount - a.totalVoteCount
+    }).map(o => o.currentLocation)
+
+    const allOption = allVoteCount.map((option, i) => {
+      return (
+        <OptionCard key={i}
+        location={ option.currentLocation }
+        updateChoice={ this.updateChoice.bind(this) }
+        isSelected={ user_choice === option.currentLocation }
+        voteTotal={ option.totalVoteCount }
+        topPad={optionLocationSortedByVoteCount.indexOf(option.currentLocation)*100}
+        />
+      )
+    })
+
+    return allOption
   }
 
   updateChoice(location) {
@@ -67,6 +78,7 @@ export default class VotePage extends Component {
     })
 
     socket.on('VoteUpdate', (res) => {
+      console.log('vote update', res.newData.top3)
       this.setState( { group: res.newData } )
     })
   }

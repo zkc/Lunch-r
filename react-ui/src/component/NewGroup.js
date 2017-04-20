@@ -10,7 +10,7 @@ export default class NewGroup extends Component {
         init_time: Date.now(), //Maybe try moment.js??
         lunch_time: '1200PM', //Definitly try moment.js.
         group_id: '',
-        top3: {first: 'bipity', second: 'bopity', third:'boop'},
+        top3: [],
         voteCollection: {},
       },
       search_location: '',

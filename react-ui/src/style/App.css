@@ -77,8 +77,10 @@
 /*Options stuff*/
 
 .option-card {
-  grid-column: 2;
-  min-width: 400px;
+  transition: all 2s ease;
+  position: absolute;
+  /*grid-column: 2;*/
+  width: 400px;
   height: 125px;
 
   display: grid;
@@ -107,22 +109,36 @@
 }
 
 .option-container {
-  display: grid;
+  margin: 0 auto;
+  width: 400px;
+  /*display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 10px;
-  grid-auto-rows: minmax(100px, auto);
+  grid-auto-rows: minmax(100px, auto);*/
 }
 
 .selected {
+  /*margin-top: 150px;*/
   background-color: #F5B82E;
-  color: #0072BB
+  color: #0072BB;
+  /*grid-row: 1;*/
 }
 
 .selected .option-vote-button {
-  background-color: #F5B82E;
   border: none;
 }
 
+.order0 {
+  margin-top: 20px
+}
+
+.order1 {
+  margin-top: 150px
+}
+
+.order2 {
+  margin-top: 300px
+}
 
 
 
