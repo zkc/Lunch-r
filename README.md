@@ -4,7 +4,7 @@ Get your group to actually pick a place to eat, before lunch break is over.
 
 (the 'r' is pronounced like a pirate)
 
-### Live Alpha: https://lunch-r.herokuapp.com/join/1
+### Live Alpha: https://lunch-r.herokuapp.com/new
 
 ## Usage:
 - Enter your group's starting location.
