@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import OptionCard from './OptionCard'
+import FilterOptionCard from './FilterOptionCard'
 
 export default class FilterOptions extends Component {
   constructor(props) {
@@ -9,40 +9,40 @@ export default class FilterOptions extends Component {
       loading: true,
       group_found: false,
       user_choice: '',
+      results: props.results,
     }
   }
   //
   makeOptions() {
-    const { results } = this.props
+    const { results } = this.state
 
     // topPad used to stack up options in order of array.
 
     const allOption = results.map((option, i) => {
       console.log(option);
       return (
-        <OptionCard key={i}
+        <FilterOptionCard key={i}
         location={ option.name }
         updateChoice={ this.updateChoice.bind(this) }
         voteTotal={ option.totalVoteCount }
         topPad={i*120}
         />
       )
-    })
+    }).slice(0,3)
 
     return allOption
   }
 
   updateChoice(location) {
-    const { socket, group_id, user_nug } = this.props
-    this.setState({ user_choice: location })
-    socket.emit('addVote', { group_id, user_choice: location, user_id: user_nug.user_id })
+    const filteredResults = this.state.results.filter(result => result.name != location)
+    this.setState({ results: filteredResults })
   }
 
   render() {
     const { group_id, user_nug } = this.props
 
     return (
-      <div className="orange-text">
+      <div className="filter-section orange-text">
         { this.makeOptions() }
       </div>
     )
