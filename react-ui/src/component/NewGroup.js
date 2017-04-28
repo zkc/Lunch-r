@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Script from 'react-load-script';
 
+import FilterOptions from './FilterOptions'
+
 export default class NewGroup extends Component {
   constructor(props) {
     super(props)
@@ -16,19 +18,27 @@ export default class NewGroup extends Component {
       search_location: '',
       place_ready: false,
       api_key: null,
+      show_filter: false,
+      optionObj: {}
     }
   }
 
-  sendNewGroup() {
+  startNewGroup() {
     const { socket, history } = this.props
     const location_result = this.autocomplete.getPlace()
     const lat = location_result.geometry.location.lat();
     const lng = location_result.geometry.location.lng();
     const updated_group = Object.assign({}, this.state.group, { placeInfo: location_result, lat, lng })
-    socket.emit('sendNewGroup', updated_group, () => {
-      history.push(`/join/${this.state.group.group_id}`)
+    socket.emit('startNewGroup', updated_group, (json) => {
+      console.log(json)
+      this.setState({show_filter: true, optionObj: json})
+      // history.push(`/join/${this.state.group.group_id}`)
     })
   }
+
+
+
+
 
   googleReady() {
     const input = document.getElementById('auto')
@@ -46,7 +56,7 @@ export default class NewGroup extends Component {
   }
 
   render() {
-    const { group: { group_id } , place_ready, api_key } = this.state
+    const { group: { group_id } , place_ready, api_key, show_filter, optionObj } = this.state
     return (
       <section className="orange-text">
         {
@@ -54,7 +64,7 @@ export default class NewGroup extends Component {
           <Script
             url={`https://maps.googleapis.com/maps/api/js?key=${api_key}&libraries=places`}
             onLoad={() => this.googleReady()}
-              onError={() => this.error()}
+            onError={() => this.error()}
           />
           : null
         }
@@ -63,8 +73,13 @@ export default class NewGroup extends Component {
         <input placeholder="Where y'all at?" id="auto" />
         {
           place_ready ?
-          <div className="create group-button" onClick={() => this.sendNewGroup()}></div>
+          <div className="create group-button" onClick={() => this.startNewGroup()}></div>
           : <div className="enter group-button" ></div>
+        }
+        {
+          show_filter ?
+          <FilterOptions {...optionObj} />
+          : <p>{'no options yet'}</p>
         }
       </section>
     )

@@ -41,7 +41,16 @@ io.on('connection', (socket) => {
     socket.join(newGroupID)
     fn(newGroupID, API_KEY)
   })
+  socket.on('startNewGroup', (groupInfo, fn) => {
+    fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${groupInfo.lat},${groupInfo.lng}&rankby=distance&type=restaurant&key=${API_KEY}`)
+    .then((res) => {
+      res.json().then((jsonRes) => {
+        fn(jsonRes)
+      })
+    })
+  })
   //sending out group info with group_id
+
   socket.on('sendNewGroup', (groupInfo, fn) => {
     fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${groupInfo.lat},${groupInfo.lng}&rankby=distance&type=restaurant&key=${API_KEY}`)
     .then((res) => {
@@ -54,7 +63,7 @@ io.on('connection', (socket) => {
         // or! send the whole list to compoment were creator can filter out options before sending?
 
         groupLib[groupInfo.group_id] = groupInfo
-        fn()
+        fn(json)
       })
     })
   })
