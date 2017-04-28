@@ -164,8 +164,20 @@
   width: 400px;
 }
 
+.filter-section div {
+  width: 200px;
+  height: 100px;
+  background-color: #8FC93A;
+  color: #0072BB;
+  margin: 0 auto;
+}
+
 .filter-option {
   position: relative;
+}
+
+.flipped {
+  transform: rotate(0.5turn);
 }
 
 

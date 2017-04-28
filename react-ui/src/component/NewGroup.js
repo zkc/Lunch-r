@@ -31,7 +31,7 @@ export default class NewGroup extends Component {
     const updated_group = Object.assign({}, this.state.group, { placeInfo: location_result, lat, lng })
     socket.emit('startNewGroup', updated_group, (json) => {
       console.log(json)
-      this.setState({show_filter: true, optionObj: json})
+      this.setState({show_filter: true, optionObj: json, place_ready: false })
     })
   }
 
@@ -79,7 +79,7 @@ export default class NewGroup extends Component {
         {
           place_ready ?
           <div className="create group-button" onClick={() => this.startNewGroup()}></div>
-          : <div className="enter group-button" ></div>
+          : <div className={`enter group-button ${show_filter && 'flipped'}`} ></div>
         }
         {
           show_filter ?

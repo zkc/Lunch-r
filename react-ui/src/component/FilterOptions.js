@@ -12,14 +12,21 @@ export default class FilterOptions extends Component {
       results: props.results,
     }
   }
-  //
+
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps)
+
+    if (nextProps.next_page_token != this.props.next_page_token) {
+      this.setState({ results: nextProps.results })
+    }
+  }
+
   makeOptions() {
     const { results } = this.state
 
     // topPad used to stack up options in order of array.
 
     const allOption = results.map((option, i) => {
-      console.log(option);
       return (
         <FilterOptionCard key={i}
         location={ option.name }
@@ -45,7 +52,7 @@ export default class FilterOptions extends Component {
     return (
       <div className="filter-section orange-text">
         { this.makeOptions() }
-        <button onClick={ () => submitLocationChoices(results.slice(0,3)) }>Click to Start Group</button>
+        <div onClick={ () => submitLocationChoices(results.slice(0,3)) }>Click to Start Group</div>
       </div>
     )
   }
