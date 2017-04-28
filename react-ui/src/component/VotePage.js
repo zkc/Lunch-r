@@ -19,11 +19,11 @@ export default class VotePage extends Component {
 
     const allVoteCount = group.top3.map((option, i) => {
       const totalVoteCount = Object.keys(group.voteCollection).reduce((res, user_id) => {
-        group.voteCollection[user_id] === option ? res++ : res
+        group.voteCollection[user_id] === option.name ? res++ : res
         return res
       }, 0)
 
-      return { currentLocation: option, totalVoteCount }
+      return { currentLocation: option.name, totalVoteCount }
     })
 
     const optionLocationSortedByVoteCount = allVoteCount.slice().sort((a,b) => {
@@ -31,6 +31,7 @@ export default class VotePage extends Component {
     }).map(o => o.currentLocation)
 
     const allOption = allVoteCount.map((option, i) => {
+      console.log(option);
       return (
         <OptionCard key={i}
         location={ option.currentLocation }
