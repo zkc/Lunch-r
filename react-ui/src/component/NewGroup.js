@@ -32,13 +32,8 @@ export default class NewGroup extends Component {
     socket.emit('startNewGroup', updated_group, (json) => {
       console.log(json)
       this.setState({show_filter: true, optionObj: json})
-      // history.push(`/join/${this.state.group.group_id}`)
     })
   }
-
-
-
-
 
   googleReady() {
     const input = document.getElementById('auto')
@@ -53,6 +48,16 @@ export default class NewGroup extends Component {
 
   error() {
     console.log('error with google places')
+  }
+
+  submitLocationChoices(top3) {
+    const { socket, history } = this.props
+    const { group } = this.state
+    Object.assign(group, { top3 })
+    socket.emit('updateGroupChoices', group, () => {
+      history.push(`/join/${this.state.group.group_id}`)
+    })
+
   }
 
   render() {
@@ -78,7 +83,7 @@ export default class NewGroup extends Component {
         }
         {
           show_filter ?
-          <FilterOptions {...optionObj} />
+          <FilterOptions {...optionObj} submitLocationChoices={this.submitLocationChoices.bind(this)} />
           : <p>{'no options yet'}</p>
         }
       </section>

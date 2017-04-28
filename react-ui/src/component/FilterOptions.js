@@ -39,11 +39,13 @@ export default class FilterOptions extends Component {
   }
 
   render() {
-    const { group_id, user_nug } = this.props
+    const { submitLocationChoices } = this.props
+    const { results } = this.state
 
     return (
       <div className="filter-section orange-text">
         { this.makeOptions() }
+        <button onClick={ () => submitLocationChoices(results.slice(0,3)) }>Click to Start Group</button>
       </div>
     )
   }
