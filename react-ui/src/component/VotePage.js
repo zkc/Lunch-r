@@ -31,7 +31,6 @@ export default class VotePage extends Component {
     }).map(o => o.currentLocation)
 
     const allOption = allVoteCount.map((option, i) => {
-      console.log(option);
       return (
         <OptionCard key={i}
         location={ option.currentLocation }
