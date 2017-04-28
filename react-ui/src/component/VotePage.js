@@ -56,7 +56,7 @@ export default class VotePage extends Component {
     const { group_id, user_nug } = this.props
 
     return (
-      <div className="vote-page">
+      <div className="orange-text">
         <h3>{`Group: ${group_id}`}</h3>
         <div className="option-container">{
           loading ?

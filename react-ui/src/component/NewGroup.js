@@ -48,13 +48,13 @@ export default class NewGroup extends Component {
   render() {
     const { group: { group_id } , place_ready, api_key } = this.state
     return (
-      <section className="vote-page">
+      <section className="orange-text">
         {
           api_key ?
           <Script
-          url={`https://maps.googleapis.com/maps/api/js?key=${api_key}&libraries=places`}
-          onLoad={() => this.googleReady()}
-          onError={() => this.error()}
+            url={`https://maps.googleapis.com/maps/api/js?key=${api_key}&libraries=places`}
+            onLoad={() => this.googleReady()}
+              onError={() => this.error()}
           />
           : null
         }
