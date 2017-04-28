@@ -52,11 +52,12 @@ export default class FilterOptions extends Component {
     return (
       <div className="filter-section orange-text">
         { this.makeOptions() }
-        <div onClick={ () => submitLocationChoices(results.slice(0,3)) }>Click to Start Group</div>
+        <div className="create group-button" onClick={() => submitLocationChoices(results.slice(0,3))}></div>
       </div>
     )
   }
 
+  // <div onClick={ () => submitLocationChoices(results.slice(0,3)) }>Click to Start Group</div>
   // componentDidMount() {
   //   const { socket, group_id } = this.props
   //   socket.emit('joinGroup', group_id, (wasGroupFound, groupInfo) => {

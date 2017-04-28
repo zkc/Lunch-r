@@ -84,7 +84,7 @@ export default class NewGroup extends Component {
         {
           show_filter ?
           <FilterOptions {...optionObj} submitLocationChoices={this.submitLocationChoices.bind(this)} />
-          : <p>{'no options yet'}</p>
+          : null
         }
       </section>
     )
