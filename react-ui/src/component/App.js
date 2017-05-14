@@ -3,6 +3,7 @@ import { Route, Link } from 'react-router-dom';
 
 import VotePage from './VotePage'
 import NewGroup from './NewGroup'
+import ShareLink from './ShareLink'
 import '../style/App.css';
 
 class App extends Component {
@@ -33,6 +34,7 @@ class App extends Component {
           <Route path={'/join/:group_id'} render={({ match }) => <VotePage socket={socket} user_nug={user_nug} group_id={ match.params.group_id } />} />
           <Route exact path={'/new'} render={({ match }) => <NewGroup socket={socket} history={this.props.history} group_id={ match.params.group_id } />} />
           <Route path={'/new/:group_id'} render={({ match }) => <NewGroup socket={socket} group_id={ match.params.group_id } />} />
+          <Route path={'/share/:group_id'} render={({ match }) => <ShareLink group_id={ match.params.group_id } history={this.props.history}/> } />
         </div>
       </div>
     );
