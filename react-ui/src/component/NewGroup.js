@@ -55,7 +55,7 @@ export default class NewGroup extends Component {
     const { group } = this.state
     Object.assign(group, { top3 })
     socket.emit('updateGroupChoices', group, () => {
-      history.push(`/join/${this.state.group.group_id}`)
+      history.push(`/share/${this.state.group.group_id}`)
     })
 
   }
