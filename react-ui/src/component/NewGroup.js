@@ -43,6 +43,7 @@ export default class NewGroup extends Component {
 
     window.google.maps.event.addListener(this.autocomplete, 'place_changed', (e) => {
       this.setState({ place_ready: true })
+      this.startNewGroup()
     });
   }
 
