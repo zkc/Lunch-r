@@ -75,7 +75,6 @@ export default class NewGroup extends Component {
           : null
         }
         <h3>Create New Lunch-r Group</h3>
-        <p>{`Group ID: ${group_id || '#'}`}</p>
         <input placeholder="Where y'all at?" id="auto" />
         {
           place_ready ?
