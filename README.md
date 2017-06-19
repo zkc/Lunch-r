@@ -5,7 +5,7 @@ Get your group to actually pick a place to eat, before lunch break is over.
 (the 'r' is pronounced like a pirate)
 
 #### Live Alpha: https://lunch-r.herokuapp.com/new
-Note, this is predominately a mobile-only app. The UI design is intended to make it as easy as possible to use on mobile. 
+Note, this is predominately a mobile-only app. The UI design is intended to make it as easy and fast as possible to use on mobile. 
 
 ## Usage:
 - Enter your group's starting location.
