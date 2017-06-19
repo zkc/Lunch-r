@@ -5,7 +5,7 @@ Get your group to actually pick a place to eat, before lunch break is over.
 (the 'r' is pronounced like a pirate)
 
 #### Live Alpha: https://lunch-r.herokuapp.com/new
-Note, this is predominately a mobile-only app. The UI design is intended to make it as easy and fast as possible to use on mobile. 
+Note, this is predominately a mobile-only app. While desktop is just as functional, the UI design is intended to make it as easy and fast as possible to use on a mobile device. 
 
 ## Usage:
 - Enter your group's starting location.
@@ -22,6 +22,8 @@ Lunch-r solves this by offering three lunch options that are near you. Just shar
 Voting is done in real time thanks to socket.io. Backend is Express.js serving a React.js UI. 
 
 #### Planed Features:
+
+- Need to have faster link sharing abilities beyond the built in copy-paste. One touch Facebook Messenger and/or Slack integreation is the goal
 
 - Suggestions: For those group members who suddenly have another place in mind after see the suggestions, they can propose a replace for one of the current bottom two options.
 
